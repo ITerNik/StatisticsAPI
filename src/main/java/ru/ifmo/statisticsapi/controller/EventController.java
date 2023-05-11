@@ -1,6 +1,7 @@
 package ru.ifmo.statisticsapi.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +9,7 @@ import ru.ifmo.statisticsapi.model.AggregationType;
 import ru.ifmo.statisticsapi.model.EventRecord;
 import ru.ifmo.statisticsapi.service.EventService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +27,7 @@ public class EventController {
     }
     @GetMapping(value = "/statistics")
     public ResponseEntity<Map<String, Integer>> filter(@RequestParam String name,
-                                                       @RequestParam LocalDateTime date,
+                                                       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date,
                                                        @RequestParam AggregationType filter_by) {
         Map<String, Integer> counter = new HashMap<>();
         ArrayList<EventRecord> events = new ArrayList<>(eventService.findByNameAndDate(name, date));

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.ifmo.statisticsapi.model.EventRecord;
 import ru.ifmo.statisticsapi.repository.EventRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class EventService {
     private final EventRepository eventRepository;
 
-    public List<EventRecord> findByNameAndDate(String name, LocalDateTime date) {
+    public List<EventRecord> findByNameAndDate(String name, LocalDate date) {
         return eventRepository.findEventRecordsByNameAndDate(name, date);
     }
     public void save(EventRecord eventRecord) {

@@ -3,6 +3,7 @@ package ru.ifmo.statisticsapi.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,7 +16,7 @@ public class EventRecord {
     private String name;
     private Boolean status;
 
-    private LocalDateTime date = LocalDateTime.now();
+    private LocalDate date = LocalDate.now();
 
     public EventRecord() {
     }
