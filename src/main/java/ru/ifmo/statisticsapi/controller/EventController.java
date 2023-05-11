@@ -4,37 +4,47 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.ifmo.statisticsapi.model.AggregationType;
 import ru.ifmo.statisticsapi.model.EventRecord;
 import ru.ifmo.statisticsapi.service.EventService;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/events")
 public class EventController {
     private final EventService eventService;
-    @GetMapping(value = "/simple")
-    public String simple() {
-        return "Easy";
-    }
 
-    @PostMapping
+    @PostMapping(value = "/events")
     public ResponseEntity<?> save(@RequestBody EventRecord eventRecord) {
         eventService.save(eventRecord);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    @GetMapping(value = "/{ip}")
-    public int countByIp(@PathVariable int ip) {
-        int res = eventService.countEventsByIp(ip);
-        return res;//new ResponseEntity<>(res, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/{name}")
-    public ResponseEntity<Integer> countByName(@PathVariable String name) {
-        return new ResponseEntity<>(eventService.countEventsByName(name), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/{status}")
-    public ResponseEntity<Integer> countByStatus(@PathVariable boolean status) {
-        return new ResponseEntity<>(eventService.countEventsByStatus(status), HttpStatus.OK);
+    @GetMapping(value = "/statistics")
+    public ResponseEntity<Map<String, Integer>> filter(@RequestParam String name,
+                                                       @RequestParam LocalDateTime date,
+                                                       @RequestParam AggregationType filter_by) {
+        Map<String, Integer> counter = new HashMap<>();
+        ArrayList<EventRecord> events = new ArrayList<>(eventService.findByNameAndDate(name, date));
+        switch (filter_by) {
+            case EVENT:
+                counter.put(name, events.size());
+                break;
+            case USER:
+                for (EventRecord event: events) {
+                    counter.put(event.getClientIp().toString(),
+                            counter.getOrDefault(event.getClientIp().toString(), 0) + 1);
+                }
+                break;
+            case STATUS:
+                for (EventRecord event: events) {
+                    String status = event.getStatus() ? "authorized" : "unauthorized";
+                    counter.put(status, counter.getOrDefault(status, 0) + 1);
+                }
+        }
+        return ResponseEntity.ok(counter);
     }
 }

@@ -7,15 +7,15 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name = "event_record")
 public class EventRecord {
 
     private @Id
     @GeneratedValue Long id;
     private Integer clientIp;
     private String name;
-    private boolean status;
-    private LocalDateTime time = LocalDateTime.now();
+    private Boolean status;
+
+    private LocalDateTime date = LocalDateTime.now();
 
     public EventRecord() {
     }

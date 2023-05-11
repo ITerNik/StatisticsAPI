@@ -4,9 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.ifmo.statisticsapi.model.EventRecord;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Repository
 public interface EventRepository extends JpaRepository<EventRecord, Long> {
-    int countEventRecordsByClientIp(int ip);
-    int countEventRecordsByName(String name);
-    int countEventRecordsByStatus(boolean status);
+    List<EventRecord> findEventRecordsByNameAndDate(String name, LocalDateTime date);
+
 }
