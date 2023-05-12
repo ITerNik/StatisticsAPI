@@ -12,7 +12,7 @@ public class EventRecord {
 
     private @Id
     @GeneratedValue Long id;
-    private Integer clientIp;
+    private String clientIp;
     private String name;
     private Boolean status;
 
@@ -21,7 +21,7 @@ public class EventRecord {
     public EventRecord() {
     }
 
-    public EventRecord(int clientIp, String name, boolean status) {
+    public EventRecord(String clientIp, String name, boolean status) {
         this.status = status;
         this.name = name;
         this.clientIp = clientIp;

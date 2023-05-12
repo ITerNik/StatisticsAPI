@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import ru.ifmo.statisticsapi.model.EventRecord;
 import ru.ifmo.statisticsapi.service.EventService;
 
+import java.net.InetAddress;
+
 
 @Service
 @RequiredArgsConstructor
@@ -15,7 +17,6 @@ public class InitUtil implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        eventService.save(new EventRecord(34, "Sign_in", false));
-        eventService.save(new EventRecord(45, "Sign_out", true));
+        eventService.save(new EventRecord(InetAddress.getLocalHost().getHostAddress(), "Initial_event", false));
     }
 }
