@@ -6,7 +6,6 @@ import ru.ifmo.statisticsapi.model.EventRecord;
 import ru.ifmo.statisticsapi.repository.EventRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
