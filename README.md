@@ -32,13 +32,16 @@
 
 > Примечание: при запуске сервер автоматически сохраняет в базу событие с именем 'Initial_event' и датой инициализации с адреса хоста
 
+Для получения всех событий, находящихся в базе на данный момент, используйте
+
+```https://statistics-api.cfapps.us10-001.hana.ondemand.com/events```
 ### Сохранение данных
 Используйте встроенную утилиту ```curl``` (Доступно для Windows и Linux)
 
-Чтобы добавить данные в формате JSON используйте:
-```
-curl -X POST -H "Content-Type: application/json" https://statistics-api.cfapps.us10-001.hana.ondemand.com/events -d DATA
-```
+Чтобы добавить данные в формате JSON, введите в командной строке
+
+```curl -X POST -H "Content-Type: application/json" https://statistics-api.cfapps.us10-001.hana.ondemand.com/events -d DATA```
+
 Данные в теле запроса предоставляются в формате:
 ```
 {
