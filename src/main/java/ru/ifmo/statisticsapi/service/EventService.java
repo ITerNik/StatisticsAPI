@@ -7,6 +7,7 @@ import ru.ifmo.statisticsapi.repository.EventRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -18,5 +19,9 @@ public class EventService {
     }
     public void save(EventRecord eventRecord) {
         eventRepository.save(eventRecord);
+    }
+
+    public List<EventRecord> findAll () {
+        return eventRepository.findAll();
     }
 }

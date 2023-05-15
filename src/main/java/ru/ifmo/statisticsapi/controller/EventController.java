@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -51,5 +52,13 @@ public class EventController {
                 }
         }
         return ResponseEntity.ok(counter);
+    }
+
+    @GetMapping(value = "/events")
+    public ResponseEntity<List<EventRecord>> getAll() {
+        List<EventRecord> events = eventService.findAll();
+        return events == null || events.isEmpty() ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(events);
     }
 }
